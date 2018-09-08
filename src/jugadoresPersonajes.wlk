@@ -1,10 +1,13 @@
 object luisa {
-	var personajeActivo
+	var personajeActivo = floki
+	 method aparece(elemento) {
+	 	personajeActivo.encontrar(elemento)
+	 }
 }
 
 
 object floki {
-	var arma
+	var arma = ballesta
 	
 	method encontrar(elemento) {
 	    if (arma.estaCargada()) {
@@ -31,6 +34,29 @@ object mario {
 	   	 	 	
 }
 
+object ballesta {
+	var flechas = 10
+	var property potencia = 4
+	method registrarUso() {
+		flechas -= 1
+	}
+	method estaCargada() {
+	   return flechas >= 1
+	}
+	
+}
+
+object jabalina {
+	var naceCargada = true
+	var property potencia = 30
+	method registrarUso() {
+		naceCargada = false
+	}
+	method estaCargada() {
+	  return naceCargada
+	}
+}
+
 object castillo {
 	var property defensa = 150
 	method altura() = 20
@@ -40,21 +66,27 @@ object castillo {
 	}
 	
 	method recibirTrabajo() {
-		if ( defensa + 20 >= 200 ) {
-			defensa += 20 - ( defensa +20 - 200 )
-		}
-		else defensa += 20
+		defensa = (defensa + 20).min(200)
+	}
+	
+	method recibirAtaque(potencia) {
+		defensa -= potencia
 	}
 }
 
 object aurora {
-	var estaViva = true
+	var property estaViva = true
 	method altura() = 1	
 	
 	method recibirTrabajo() {}
 	
 	method valorQueOtorga() {
 		return 15	
+	}
+	method recibirAtaque(potencia) {
+		if ( potencia >= 10 ) {
+			estaViva = false
+		}
 	}
 
 }
@@ -68,6 +100,7 @@ object tipa {
 	method recibirTrabajo() {
 		altura += 1
 	}
+	method recibirAtaque(potencia) {}
 }
 
 object noHayPersonaje {
